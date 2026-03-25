@@ -1,3 +1,6 @@
+CREATE DATABASE financeiro CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE financeiro;
+
 CREATE TABLE bancos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100),
@@ -6,12 +9,10 @@ CREATE TABLE bancos (
     ativo BOOLEAN DEFAULT TRUE
 );
 
-
 CREATE TABLE categorias (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100)
 );
-
 
 CREATE TABLE contas (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -26,7 +27,6 @@ CREATE TABLE contas (
     FOREIGN KEY (categoria_id) REFERENCES categorias(id)
 );
 
-
 CREATE TABLE movimentacoes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     conta_id INT,
@@ -38,3 +38,11 @@ CREATE TABLE movimentacoes (
     FOREIGN KEY (conta_id) REFERENCES contas(id),
     FOREIGN KEY (banco_id) REFERENCES bancos(id)
 );
+
+
+INSERT INTO categorias (nome) VALUES ('Casa'), ('Carro');
+
+INSERT INTO bancos (nome, tipo) VALUES ('Nubank', 'CONTA');
+
+INSERT INTO contas (descricao, tipo, valor_total, saldo, data_vencimento, status, categoria_id)
+VALUES ('Conta de Luz', 'PAGAR', 200, 200, '2026-03-30', 'PENDENTE', 1);

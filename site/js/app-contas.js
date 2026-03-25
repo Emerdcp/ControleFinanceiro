@@ -1,18 +1,32 @@
 async function listarContas() {
-    const res = await fetch(`${API}/contas`);
+    const res = await fetch('/contas');
     const dados = await res.json();
 
-    const tabela = document.getElementById("tabelaContas");
+    const container = document.getElementById('listaContas');
 
-    tabela.innerHTML = "";
+    container.innerHTML = '';
 
     dados.forEach(c => {
-        tabela.innerHTML += `
-            <tr>
-                <td>${c.descricao}</td>
-                <td>${c.valor_total}</td>
-                <td>${c.status}</td>
-            </tr>
+
+        const statusClass = c.status === 'PAGO' ? 'pago' : 'pendente';
+
+        container.innerHTML += `
+            <div class="card">
+                <h3>${c.descricao}</h3>
+
+                <div class="valor">R$ ${c.valor_total}</div>
+
+                <p>Tipo: ${c.tipo}</p>
+                <p>Vencimento: ${c.data_vencimento}</p>
+
+                <p class="${statusClass}">
+                    Status: ${c.status}
+                </p>
+
+                <button onclick="pagar(${c.id})">
+                    💰 Pagar
+                </button>
+            </div>
         `;
     });
 }
